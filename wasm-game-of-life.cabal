@@ -1,0 +1,39 @@
+cabal-version:          2.4
+name:                   wasm-game-of-life
+version:                0.1.0.0
+license:                BSD-3-Clause
+
+executable wasm-game-of-life
+  ghc-options:          -optl--export-function=randomUniverse
+                        -optl--export-function=tickUniverse
+                        -optl--export-function=getHeight
+                        -optl--export-function=getWidth
+                        -optl--export-function=toggleCell
+                        -Wall
+  hs-source-dirs:       app
+  main-is:              Main.hs
+  build-depends:        wasm-game-of-life
+                      , base
+  default-language:     Haskell2010
+
+library
+  ghc-options:          -Wall
+  hs-source-dirs:       src
+  exposed-modules:      Acme.GameOfLife.Universe
+  build-depends:        base
+                      , vector
+                      , random
+  default-language:     Haskell2010
+
+Test-Suite spec
+  ghc-options:          -Wall
+  type:                 exitcode-stdio-1.0
+  hs-source-dirs:       test
+  main-is:              Spec.hs
+  other-modules:        Acme.GameOfLife.UniverseSpec
+  build-depends:        wasm-game-of-life
+                      , base
+                      , hspec
+                      , vector
+  build-tool-depends:   hspec-discover:hspec-discover
+  Default-Language:     Haskell2010
